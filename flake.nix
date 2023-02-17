@@ -45,12 +45,6 @@
         flake = false;
       };
 
-      doom-emacs = {                                                        # Nix-community Doom Emacs
-         url = "github:nix-community/nix-doom-emacs";
-         inputs.nixpkgs.follows = "nixpkgs";
-         inputs.emacs-overlay.follows = "emacs-overlay";
-      };
-
       hyprland = {                                                          # Official Hyprland flake
         url = "github:vaxerski/Hyprland";
         inputs.nixpkgs.follows = "nixpkgs";
@@ -59,14 +53,14 @@
 
   outputs = inputs @ { self, nixpkgs, home-manager, darwin, nur, nixgl, doom-emacs, hyprland, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
     let                                                                     # Variables that can be used in the config files.
-      user = "matthias";
+      user = "rolfst";
       location = "$HOME/.setup";
     in                                                                      # Use above variables in ...
     {
       nixosConfigurations = (                                               # NixOS configurations
         import ./hosts {                                                    # Imports ./hosts/default.nix
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager nur user location doom-emacs hyprland;   # Also inherit home-manager so it does not need to be defined here.
+          inherit inputs nixpkgs home-manager nur user location hyprland;   # Also inherit home-manager so it does not need to be defined here.
         }
       );
 
