@@ -11,7 +11,7 @@
 #            └─ ./home.nix 
 #
 
-{ lib, inputs, nixpkgs, home-manager, nur, user, location, doom-emacs, hyprland, ... }:
+{ lib, inputs, nixpkgs, home-manager, nur, user, location, hyprland, ... }:
 
 let
   system = "x86_64-linux";                                  # System architecture
