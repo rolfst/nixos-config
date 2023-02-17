@@ -25,12 +25,12 @@
   };
   security.sudo.wheelNeedsPassword = false; # User does not need to give password when using sudo.
 
-  time.timeZone = "Europe/Brussels";        # Time zone and internationalisation
+  time.timeZone = "Europe/Amsterdam";        # Time zone and internationalisation
   i18n = {
     defaultLocale = "en_US.UTF-8";
     extraLocaleSettings = {                 # Extra locale settings that need to be overwritten
-      LC_TIME = "nl_BE.UTF-8";
-      LC_MONETARY = "nl_BE.UTF-8";
+      LC_TIME = "nl_NL.UTF-8";
+      LC_MONETARY = "nl_NL.UTF-8";
     };
   };
 
@@ -58,6 +58,7 @@
     (nerdfonts.override {                   # Nerdfont Icons override
       fonts = [
         "FiraCode"
+        "CascadiaCove"
       ];
     })
   ];
@@ -100,7 +101,6 @@
         support32Bit = true;
       };
       pulse.enable = true;
-      jack.enable = true;
     };
     openssh = {                             # SSH: secure shell (remote connection to shell of server)
       enable = true;                        # local: $ ssh <user>@<ip>
