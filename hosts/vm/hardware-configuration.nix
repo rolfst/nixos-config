@@ -37,7 +37,7 @@
     useDHCP = false;                        # Deprecated
     hostName = "vm";
     interfaces = {
-      enp0s3.useDHCP = true;
+      enp1s0.useDHCP = true;
     };
   };
 
