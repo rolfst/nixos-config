@@ -70,13 +70,13 @@
       VISUAL = "nvim";
     };
     systemPackages = with pkgs; [           # Default packages installed system-wide
-      #vim
-      #git
+      vim
+      git
       killall
-      nano
       pciutils
       usbutils
       wget
+      curl
     ];
   };
 
