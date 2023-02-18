@@ -40,18 +40,13 @@
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
-      emacs-overlay = {                                                     # Emacs Overlays
-        url = "github:nix-community/emacs-overlay";
-        flake = false;
-      };
-
       hyprland = {                                                          # Official Hyprland flake
         url = "github:vaxerski/Hyprland";
         inputs.nixpkgs.follows = "nixpkgs";
       };
     };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, darwin, nur, nixgl, doom-emacs, hyprland, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
+  outputs = inputs @ { self, nixpkgs, home-manager, darwin, nur, nixgl, hyprland, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
     let                                                                     # Variables that can be used in the config files.
       user = "rolfst";
       location = "$HOME/.setup";
