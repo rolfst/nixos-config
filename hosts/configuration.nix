@@ -58,7 +58,7 @@
     (nerdfonts.override {                   # Nerdfont Icons override
       fonts = [
         "FiraCode"
-        "CascadiaCove"
+        "CascadiaCode"
       ];
     })
   ];
