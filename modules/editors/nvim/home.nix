@@ -10,6 +10,7 @@
       enable = true;
       viAlias = true;
       vimAlias = true;
+      withNodeJs = true;
 
       plugins = with pkgs.vimPlugins; [
         # Syntax

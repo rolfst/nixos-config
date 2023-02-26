@@ -11,8 +11,8 @@
 #
 
 [
-  ./alacritty.nix
-  ./rofi.nix
+  # ./alacritty.nix
+  # ./rofi.nix
   #./waybar.nix
   #./games.nix
 ]

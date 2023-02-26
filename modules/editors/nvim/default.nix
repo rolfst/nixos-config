@@ -10,6 +10,7 @@
       enable = true;
       viAlias = true;
       vimAlias = true;
+      withNodeJs = true;
 
       configure = {
         customRC = ''
