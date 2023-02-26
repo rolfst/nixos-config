@@ -30,23 +30,23 @@
       tldr              # Helper
 
       # Video/Audio
-      feh               # Image Viewer
+      # feh               # Image Viewer
       mpv               # Media Player
       pavucontrol       # Audio Control
       plex-media-player # Media Player
-      vlc               # Media Player
-      stremio           # Media Streamer
+      # vlc               # Media Player
+      # stremio           # Media Streamer
 
       # Apps
       appimage-run      # Runs AppImages on NixOS
-      firefox           # Browser
-      google-chrome     # Browser
-      remmina           # XRDP & VNC Client
+      # firefox           # Browser
+      # google-chrome     # Browser
+      # remmina           # XRDP & VNC Client
 
       # File Management
-      gnome.file-roller # Archive Manager
-      okular            # PDF Viewer
-      pcmanfm           # File Manager
+      # gnome.file-roller # Archive Manager
+      # okular            # PDF Viewer
+      # pcmanfm           # File Manager
       p7zip             # Zip Encryption
       rsync             # Syncer - $ rsync -r dir1/ dir2/
       unzip             # Zip Files
@@ -57,7 +57,7 @@
       #git              # Repositories
       #killall          # Stop Applications
       #nano             # Text Editor
-      #pciutils         # Computer Utility Info
+      pciutils         # Computer Utility Info
       #pipewire         # Sound
       #usbutils         # USB Utility Info
       #wacomtablet      # Wacom Tablet
@@ -134,16 +134,16 @@
       # Flatpak
       #obs-studio       # Recording/Live Streaming
     ];
-    file.".config/wall".source = ../modules/themes/wall;
-    file.".config/wall.mp4".source = ../modules/themes/wall.mp4;
-    pointerCursor = {                         # This will set cursor system-wide so applications can not choose their own
-      gtk.enable = true;
-      name = "Dracula-cursors";
-      #name = "Catppuccin-Mocha-Dark-Cursors";
-      package = pkgs.dracula-theme;
-      #package = pkgs.catppuccin-cursors.mochaDark;
-      size = 16;
-    };
+    # file.".config/wall".source = ../modules/themes/wall;
+    # file.".config/wall.mp4".source = ../modules/themes/wall.mp4;
+    # pointerCursor = {                         # This will set cursor system-wide so applications can not choose their own
+    #   gtk.enable = true;
+    #   name = "Dracula-cursors";
+    #   #name = "Catppuccin-Mocha-Dark-Cursors";
+    #   package = pkgs.dracula-theme;
+    #   #package = pkgs.catppuccin-cursors.mochaDark;
+    #   size = 16;
+    # };
     stateVersion = "22.05";
   };
 
@@ -151,32 +151,32 @@
     home-manager.enable = true;
   };
 
-  gtk = {                                     # Theming
-    enable = true;
-    theme = {
-      name = "Dracula";
-      #name = "Catppuccin-Mocha-Compact-Mauve-Dark";
-      package = pkgs.dracula-theme;
-      #package = pkgs.catppuccin-gtk.override {
-      #  accents = ["mauve"];
-      #  size = "compact";
-      #  variant = "mocha";
-      #};
-    };
-    iconTheme = {
-      name = "Papirus-Dark";
-      package = pkgs.papirus-icon-theme;
-    };
-    font = {
-      #name = "JetBrains Mono Medium";
-      name = "FiraCode Nerd Font Mono Medium";
-    };                                        # Cursor is declared under home.pointerCursor
-  };
+  # gtk = {                                     # Theming
+  #   enable = true;
+  #   theme = {
+  #     name = "Dracula";
+  #     #name = "Catppuccin-Mocha-Compact-Mauve-Dark";
+  #     package = pkgs.dracula-theme;
+  #     #package = pkgs.catppuccin-gtk.override {
+  #     #  accents = ["mauve"];
+  #     #  size = "compact";
+  #     #  variant = "mocha";
+  #     #};
+  #   };
+  #   iconTheme = {
+  #     name = "Papirus-Dark";
+  #     package = pkgs.papirus-icon-theme;
+  #   };
+  #   font = {
+  #     #name = "JetBrains Mono Medium";
+  #     name = "FiraCode Nerd Font Mono Medium";
+  #   };                                        # Cursor is declared under home.pointerCursor
+  # };
 
-  systemd.user.targets.tray = {               # Tray.target can not be found when xsession is not enabled. This fixes the issue.
-    Unit = {
-      Description = "Home Manager System Tray";
-      Requires = [ "graphical-session-pre.target" ];
-    };
-  };
+  # systemd.user.targets.tray = {               # Tray.target can not be found when xsession is not enabled. This fixes the issue.
+  #   Unit = {
+  #     Description = "Home Manager System Tray";
+  #     Requires = [ "graphical-session-pre.target" ];
+  #   };
+  # };
 }
