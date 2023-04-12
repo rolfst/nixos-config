@@ -1,30 +1,37 @@
 #
 #  These are the different profiles that can be used when building NixOS.
 #
-#  flake.nix 
-#   └─ ./hosts  
+#  flake.nix
+#   └─ ./hosts
 #       ├─ default.nix *
 #       ├─ configuration.nix
 #       ├─ home.nix
 #       └─ ./desktop OR ./laptop OR ./work OR ./vm
 #            ├─ ./default.nix
-#            └─ ./home.nix 
+#            └─ ./home.nix
 #
-
-{ lib, inputs, nixpkgs, home-manager, nur, user, location, hyprland, ... }:
-
-let
-  system = "x86_64-linux";                                  # System architecture
+{
+  lib,
+  inputs,
+  nixpkgs,
+  home-manager,
+  nur,
+  user,
+  location,
+  hyprland,
+  ...
+}: let
+  system = "x86_64-linux"; # System architecture
 
   pkgs = import nixpkgs {
     inherit system;
-    config.allowUnfree = true;                              # Allow proprietary software
+    config.allowUnfree = true; # Allow proprietary software
   };
 
   lib = nixpkgs.lib;
-in
-{
-  desktop = lib.nixosSystem {                               # Desktop profile
+in {
+  desktop = lib.nixosSystem {
+    # Desktop profile
     inherit system;
     specialArgs = {
       inherit inputs user location;
@@ -33,24 +40,28 @@ in
         mainMonitor = "HDMI-A-3";
         secondMonitor = "DP-1";
       };
-    };                                                      # Pass flake variable
-    modules = [                                             # Modules that are used.
+    }; # Pass flake variable
+    # add for hyperland:
+    #  hyprland.nixosModules.default
+    modules = [
+      # Modules that are used.
       nur.nixosModules.nur
-      hyprland.nixosModules.default
       ./desktop
       ./configuration.nix
 
-      home-manager.nixosModules.home-manager {              # Home-Manager module that is used.
+      home-manager.nixosModules.home-manager
+      {
+        # Home-Manager module that is used.
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
           inherit user;
           host = {
-            hostName = "desktop";     #For Xorg iGPU  | Videocard 
+            hostName = "desktop"; #For Xorg iGPU  | Videocard
             mainMonitor = "HDMI-A-3"; #HDMIA3         | HDMI-A-1
-            secondMonitor = "DP-1";   #DP1            | DisplayPort-1
+            secondMonitor = "DP-1"; #DP1            | DisplayPort-1
           };
-        };                                                  # Pass flake variable
+        }; # Pass flake variable
         home-manager.users.${user} = {
           imports = [(import ./home.nix)] ++ [(import ./desktop/home.nix)];
         };
@@ -58,7 +69,8 @@ in
     ];
   };
 
-  laptop = lib.nixosSystem {                                # Laptop profile
+  laptop = lib.nixosSystem {
+    # Laptop profile
     inherit system;
     specialArgs = {
       inherit inputs user location;
@@ -67,12 +79,13 @@ in
         mainMonitor = "eDP-1";
       };
     };
+    #  hyprland.nixosModules.default
     modules = [
-      hyprland.nixosModules.default
       ./laptop
       ./configuration.nix
 
-      home-manager.nixosModules.home-manager {
+      home-manager.nixosModules.home-manager
+      {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
@@ -89,7 +102,8 @@ in
     ];
   };
 
-  work = lib.nixosSystem {                                  # Work profile
+  work = lib.nixosSystem {
+    # Work profile
     inherit system;
     specialArgs = {
       inherit inputs user location;
@@ -99,12 +113,13 @@ in
         secondMonitor = "HDMI-A-2";
       };
     };
+    #  hyprland.nixosModules.default
     modules = [
-      hyprland.nixosModules.default
       ./work
       ./configuration.nix
 
-      home-manager.nixosModules.home-manager {
+      home-manager.nixosModules.home-manager
+      {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
@@ -122,7 +137,8 @@ in
     ];
   };
 
-  vm = lib.nixosSystem {                                    # VM profile
+  vm = lib.nixosSystem {
+    # VM profile
     inherit system;
     specialArgs = {
       inherit inputs user location;
@@ -135,7 +151,8 @@ in
       ./vm
       ./configuration.nix
 
-      home-manager.nixosModules.home-manager {
+      home-manager.nixosModules.home-manager
+      {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {

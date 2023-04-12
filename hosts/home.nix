@@ -10,13 +10,17 @@
 #       └─ ./services
 #           └─ default.nix
 #
-
-{ config, lib, pkgs, user, ... }:
-
-{ 
-  imports =                                   # Home Manager Modules
-    (import ../modules/programs) ++
-    (import ../modules/services);
+{
+  config,
+  lib,
+  pkgs,
+  user,
+  ...
+}: {
+  imports =
+    # Home Manager Modules
+    (import ../modules/programs)
+    ++ (import ../modules/services);
 
   home = {
     username = "${user}";
@@ -24,34 +28,31 @@
 
     packages = with pkgs; [
       # Terminal
-      btop              # Resource Manager
-      nitch             # Minimal fetch
-      ranger            # File Manager
-      tldr              # Helper
+      rose-pine-gtk-theme
+      btop # Resource Manager
+      nitch # Minimal fetch
+      tldr # Helper
 
       # Video/Audio
-      feh               # Image Viewer
-      mpv               # Media Player
-      pavucontrol       # Audio Control
-      plex-media-player # Media Player
-      vlc               # Media Player
-      stremio           # Media Streamer
+      feh # Image Viewer
+      mpv # Media Player
+      pavucontrol # Audio Control
+      vlc # Media Player
 
       # Apps
-      appimage-run      # Runs AppImages on NixOS
-      firefox           # Browser
-      google-chrome     # Browser
-      remmina           # XRDP & VNC Client
+      firefox # Browser
+      google-chrome # Browser
+      remmina # XRDP & VNC Client
 
       # File Management
       gnome.file-roller # Archive Manager
-      okular            # PDF Viewer
-      pcmanfm           # File Manager
-      p7zip             # Zip Encryption
-      rsync             # Syncer - $ rsync -r dir1/ dir2/
-      unzip             # Zip Files
-      unrar             # Rar Files
-      zip               # Zip
+      okular # PDF Viewer
+      pcmanfm # File Manager
+      p7zip # Zip Encryption
+      rsync # Syncer - $ rsync -r dir1/ dir2/
+      unzip # Zip Files
+      unrar # Rar Files
+      zip # Zip
 
       # General configuration
       #git              # Repositories
@@ -123,7 +124,7 @@
       #steam            # Games
       #simple-scan      # Scanning
       #sshpass          # Ansible dependency
-      # 
+      #
       # Laptop
       #cbatticon        # Battery Notifications
       #blueman          # Bluetooth
@@ -136,7 +137,8 @@
     ];
     file.".config/wall".source = ../modules/themes/wall;
     file.".config/wall.mp4".source = ../modules/themes/wall.mp4;
-    pointerCursor = {                         # This will set cursor system-wide so applications can not choose their own
+    pointerCursor = {
+      # This will set cursor system-wide so applications can not choose their own
       gtk.enable = true;
       name = "Dracula-cursors";
       #name = "Catppuccin-Mocha-Dark-Cursors";
@@ -151,12 +153,13 @@
     home-manager.enable = true;
   };
 
-  gtk = {                                     # Theming
+  gtk = {
+    # Theming
     enable = true;
     theme = {
-      name = "Dracula";
+      name = "rose-pine";
       #name = "Catppuccin-Mocha-Compact-Mauve-Dark";
-      package = pkgs.dracula-theme;
+      package = pkgs.rose-pine-gtk-theme;
       #package = pkgs.catppuccin-gtk.override {
       #  accents = ["mauve"];
       #  size = "compact";
@@ -170,13 +173,14 @@
     font = {
       #name = "JetBrains Mono Medium";
       name = "FiraCode Nerd Font Mono Medium";
-    };                                        # Cursor is declared under home.pointerCursor
+    }; # Cursor is declared under home.pointerCursor
   };
 
-  systemd.user.targets.tray = {               # Tray.target can not be found when xsession is not enabled. This fixes the issue.
+  systemd.user.targets.tray = {
+    # Tray.target can not be found when xsession is not enabled. This fixes the issue.
     Unit = {
       Description = "Home Manager System Tray";
-      Requires = [ "graphical-session-pre.target" ];
+      Requires = ["graphical-session-pre.target"];
     };
   };
 }
