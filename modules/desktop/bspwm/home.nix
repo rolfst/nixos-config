@@ -14,10 +14,13 @@
 #       ├─ ./picom.nix
 #       ├─ ./polybar.nix
 #       └─ ./sxhkd.nix
-
-{ config, lib, pkgs, host, ... }:
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  host,
+  ...
+}: let
   extra = ''
     WORKSPACES                              # Workspace tag names (need to be the same as the polybar config to work)
 
@@ -38,43 +41,46 @@ let
     feh --bg-tile $HOME/.config/wall        # Wallpaper
 
     killall -q polybar &                    # Reboot polybar to correctly show workspaces
-    while pgrep -u $UID -x polybar >/dev/null; do sleep 1;done 
+    while pgrep -u $UID -x polybar >/dev/null; do sleep 1;done
 
     polybar main & #2>~/log &               # To lazy to figure out systemd service order
   '';
 
-  extraConf = with host; builtins.replaceStrings [ "WORKSPACES" ]
-  [
-    (if hostName == "desktop" then ''
-      bspc monitor ${mainMonitor} -d 1 2 3 4 5
-      bspc monitor ${secondMonitor} -d 6 7 8 9 0
-      bspc wm -O ${mainMonitor} ${secondMonitor}
-      polybar sec &
-    ''
-    else if hostName == "laptop" || hostName == "vm" then ''
-      bspc monitor -d 1 2 3 4 5
-    ''
-    else false)
-  ]
-  "${extra}";
-in
-{
+  extraConf = with host;
+    builtins.replaceStrings ["WORKSPACES"]
+    [
+      (
+        if hostName == "desktop"
+        then ''
+          bspc monitor ${mainMonitor} -d 1 2 3 4 5
+          bspc monitor ${secondMonitor} -d 6 7 8 9 0
+          bspc wm -O ${mainMonitor} ${secondMonitor}
+          polybar sec &
+        ''
+        else if hostName == "laptop" || hostName == "vm"
+        then ''
+          bspc monitor -d 1 2 3 4 5
+        ''
+        else false
+      )
+    ]
+    "${extra}";
+in {
   xsession = {
     enable = true;
     numlock.enable = true;
     windowManager = {
       bspwm = {
         enable = true;
-        monitors = with host; if hostName == "desktop" then {
-          ${mainMonitor} = [ "1" "2" "3" "4" "5" ];
-          ${secondMonitor} = [ "6" "7" "8" "9" "0" ];
-        } else {};                              # Multiple Monitors
-        rules = {                               # Specific rules for apps - use xprop
-          "Emacs" = {
-            desktop = "3";
-            follow = true;
-            state = "tiled";
-          };
+        monitors = with host;
+          if hostName == "desktop"
+          then {
+            ${mainMonitor} = ["1" "2" "3" "4" "5"];
+            ${secondMonitor} = ["6" "7" "8" "9" "0"];
+          }
+          else {}; # Multiple Monitors
+        rules = {
+          # Specific rules for apps - use xprop
           ".blueman-manager-wrapped" = {
             state = "floating";
             sticky = true;
@@ -96,14 +102,16 @@ in
           };
           "plexmediaplayer" = {
             desktop = "4";
-            follow= true;
+            follow = true;
             state = "fullscreen";
           };
-          "*:*:Picture in picture" = {  #Google Chrome PIP
+          "*:*:Picture in picture" = {
+            #Google Chrome PIP
             state = "floating";
             sticky = true;
           };
-          "*:*:Picture-in-Picture" = {  #Firefox PIP
+          "*:*:Picture-in-Picture" = {
+            #Firefox PIP
             state = "floating";
             sticky = true;
           };

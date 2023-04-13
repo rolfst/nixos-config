@@ -9,9 +9,8 @@
 #           └─ default.nix *
 #               └─ ...
 #
-
 [
-  ./alacritty.nix
+  ./kitty.nix
   ./rofi.nix
   #./waybar.nix
   #./games.nix
